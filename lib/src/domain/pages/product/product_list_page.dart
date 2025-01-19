@@ -15,6 +15,9 @@ class _ProductListPageState extends State<ProductListPage> {
         title: Text('لیست محصولات'),
         centerTitle: true,
       ),
+      body: Container(
+
+      ),
     );
   }
 }
