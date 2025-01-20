@@ -77,7 +77,7 @@ class ProductListPage extends StatelessWidget {
                             crossAxisSpacing: 5,
                             mainAxisSpacing: 5
                           ),
-                          itemCount: slideController.images.length,
+                          itemCount: slideController.imageList.length,
                           itemBuilder: (context, index) {
                             return Container(
                               margin: EdgeInsets.all(5),
@@ -85,7 +85,7 @@ class ProductListPage extends StatelessWidget {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
                                 image: DecorationImage(
-                                  image: AssetImage(slideController.images[index]),
+                                  image: AssetImage(slideController.imageList[index]),
                                   fit: BoxFit.cover,
                                 ),
                               ),
