@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:main_project/src/config/consts/app_color.dart';
 import 'package:get/get.dart';
-import 'package:main_project/src/domain/controllers/splash_controller.dart';
+import '../controller/splash_controller.dart';
 
 class SplashPage extends StatelessWidget {
    SplashPage({super.key});

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:get/get.dart';
 import 'package:main_project/src/config/consts/app_color.dart';
-import 'package:main_project/src/domain/controllers/base_controller.dart';
-import 'package:main_project/src/domain/pages/dashboard/dashboard_page.dart';
-import 'package:main_project/src/domain/pages/home/home_page.dart';
-import 'package:main_project/src/domain/pages/product/product_list_page.dart';
-import 'package:main_project/src/domain/pages/profile/profile_page.dart';
-import 'package:main_project/src/domain/pages/tools/tools_page.dart';
+import '../../dashboard/page/dashboard_page.dart';
+import '../../home/page/home_page.dart';
+import '../../product/page/product_list_page.dart';
+import '../../profile/page/profile_page.dart';
+import '../../tools/page/tools_page.dart';
+import '../controller/base_controller.dart';
 
 
 class BasePage extends StatelessWidget {
@@ -24,6 +24,7 @@ class BasePage extends StatelessWidget {
       ),*/
       bottomNavigationBar: Obx(() {
         return SnakeNavigationBar.color(height: Get.height*.08,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(15),topRight: Radius.circular(15))),
           behaviour: SnakeBarBehaviour.pinned,
           backgroundColor: AppColor.backgroundColor,
           snakeShape: SnakeShape.circle,

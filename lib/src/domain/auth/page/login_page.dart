@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:main_project/src/config/consts/app_color.dart';
 import 'package:get/get.dart';
+import 'package:main_project/src/domain/auth/controller/auth_controller.dart';
 import 'package:main_project/src/widget/input_textField.widget.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   final TextEditingController _emailController=TextEditingController();
   final TextEditingController _passwordController=TextEditingController();
+  final formKey=GlobalKey<FormState>();
+  AuthController authController=Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,25 +43,47 @@ class LoginPage extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 30, bottom: 10),
-                    child: InputTextField(
-                      hintText: 'ایمیل',
-                      labelText: 'لطفا ایمیل خود را وارد کنید',
-                      controller: _emailController,
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30, bottom: 10),
+                      child: Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                          filled: true,
+                          fillColor: AppColor.inputColor,
+                          hintText: 'ایمیل',
+                          labelText: 'لطفا ایمیل خود را وارد کنید',
+                          ),
+                          validator: (value)=>authController.validateEmail(value),
+                          controller: _emailController,
+                        ),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15, bottom: 30),
-                    child: InputTextField(
-                        labelText: 'لطفا پسورد خود را وارد کنید',
-                        hintText: 'پسورد',
-                        obscureText: true,
-                      controller: _passwordController,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15, bottom: 30),
+                      child: Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: TextFormField(
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColor.inputColor,
+                              labelText: 'لطفا پسورد خود را وارد کنید',
+                              hintText: 'پسورد',
+                            ),
+                            validator: (value)=>authController.validatePassword(value!),
+                            obscureText: true,
+                          controller: _passwordController,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
+                ),
+              ),
+            ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColor.blueColor,
@@ -72,9 +97,6 @@ class LoginPage extends StatelessWidget {
                     child: Text('وارد شوید',style: TextStyle(color: AppColor.whiteColor,fontWeight: FontWeight.w700,),
                   ),
                   ),
-                ],
-              ),
-            ),
           ],
         ),
       ),
