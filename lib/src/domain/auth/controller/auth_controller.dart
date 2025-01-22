@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:main_project/src/config/repository/auth.repository.dart';
 
 class AuthController extends GetxController{
-
+  final AuthRepository _authRepository=AuthRepository();
+  var isLoading=false.obs;
 
   String? validateEmail(String? value) {
     const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
@@ -20,7 +22,7 @@ class AuthController extends GetxController{
   }
   String? validatePassword(String value) {
     RegExp regex =
-    RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    RegExp(r'^(?=.*?[a-z]).{8,}$');
     if (value.isEmpty) {
       return 'Please enter password';
     } else {
@@ -31,4 +33,22 @@ class AuthController extends GetxController{
       }
     }
   }
+
+  Future<void> login(String email,String password) async{
+    isLoading.value=true;
+    try {
+      final response = await _authRepository.login(email, password);
+      if(response !=null){
+        Get.snackbar('موفقیت آمیز', 'شما با موفقیت وارد شدید: ${response['token']}');
+        Get.toNamed('/base');
+      }else{
+        Get.snackbar('ناموفق', 'ورود ناموفق');
+      }
+    }catch(e){
+      Get.snackbar('ناموفق', 'ورود ناموفق');
+    }finally{
+      isLoading.value=false;
+    }
+  }
+
 }

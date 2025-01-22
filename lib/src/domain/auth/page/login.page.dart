@@ -6,10 +6,12 @@ import 'package:main_project/src/widget/input_textField.widget.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
-  final TextEditingController _emailController=TextEditingController();
-  final TextEditingController _passwordController=TextEditingController();
-  final formKey=GlobalKey<FormState>();
-  AuthController authController=Get.find<AuthController>();
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  AuthController authController = Get.find<AuthController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +30,9 @@ class LoginPage extends StatelessWidget {
                       color: AppColor.whiteColor,
                       image: DecorationImage(
                           fit: BoxFit.contain,
-                          image: Image.asset('assets/images/logo.png').image)),
+                          image: Image
+                              .asset('assets/images/logo.png')
+                              .image)),
                 ),
               ],
             ),
@@ -38,8 +42,8 @@ class LoginPage extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 1,left: 17,right: 17),
-              child: Divider(color: AppColor.inputColor,height: 1,),
+              padding: const EdgeInsets.only(bottom: 1, left: 17, right: 17),
+              child: Divider(color: AppColor.inputColor, height: 1,),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -53,12 +57,13 @@ class LoginPage extends StatelessWidget {
                         textDirection: TextDirection.rtl,
                         child: TextFormField(
                           decoration: InputDecoration(
-                          filled: true,
-                          fillColor: AppColor.inputColor,
-                          hintText: 'ایمیل',
-                          labelText: 'لطفا ایمیل خود را وارد کنید',
+                            filled: true,
+                            fillColor: AppColor.inputColor,
+                            hintText: 'ایمیل',
+                            labelText: 'لطفا ایمیل خود را وارد کنید',
                           ),
-                          validator: (value)=>authController.validateEmail(value),
+                          validator: (value) =>
+                              authController.validateEmail(value),
                           controller: _emailController,
                         ),
                       ),
@@ -68,14 +73,15 @@ class LoginPage extends StatelessWidget {
                       child: Directionality(
                         textDirection: TextDirection.rtl,
                         child: TextFormField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor.inputColor,
-                              labelText: 'لطفا پسورد خود را وارد کنید',
-                              hintText: 'پسورد',
-                            ),
-                            validator: (value)=>authController.validatePassword(value!),
-                            obscureText: true,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: AppColor.inputColor,
+                            labelText: 'لطفا پسورد خود را وارد کنید',
+                            hintText: 'پسورد',
+                          ),
+                          validator: (value) =>
+                              authController.validatePassword(value!),
+                          obscureText: true,
                           controller: _passwordController,
                         ),
                       ),
@@ -84,19 +90,31 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColor.blueColor,
-                      minimumSize: Size(80, 45),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                      elevation: 0,
-                    ),
-                    onPressed: () {
-                      Get.toNamed('/base');
-                    },
-                    child: Text('وارد شوید',style: TextStyle(color: AppColor.whiteColor,fontWeight: FontWeight.w700,),
-                  ),
-                  ),
+
+            Obx(() => authController.isLoading.value?
+                CircularProgressIndicator()
+              : ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColor.blueColor,
+                  minimumSize: Size(80, 45),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  elevation: 0,
+                ),
+                onPressed: (){
+                  Get.toNamed('/base');
+                },
+                /*onPressed: () async{if(formKey.currentState!.validate()) {
+                  await authController.login(
+                      _emailController.text,
+                      _passwordController.text);
+                }
+                },*/
+                child: Text('وارد شوید', style: TextStyle(
+                  color: AppColor.whiteColor, fontWeight: FontWeight.w700,),
+                ),
+              ),
+            ),
           ],
         ),
       ),

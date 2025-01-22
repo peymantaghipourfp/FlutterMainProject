@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import '../../../domain/base/controller/base_controller.dart';
-import '../../../domain/dashboard/page/dashboard_page.dart';
-import '../../../domain/home/page/home_page.dart';
+import '../../../domain/dashboard/page/dashboard.page.dart';
+import '../../../domain/home/page/home.page.dart';
 import '../../../domain/product/controller/slide_controller.dart';
-import '../../../domain/product/page/product_list_page.dart';
-import '../../../domain/profile/page/profile_page.dart';
-import '../../../domain/tools/page/tools_page.dart';
+import '../../../domain/product/page/product_list.page.dart';
+import '../../../domain/profile/page/profile.page.dart';
+import '../../../domain/tools/page/tools.page.dart';
 
 class BaseBindings implements Bindings {
   @override

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:get/get.dart';
 import 'package:main_project/src/config/consts/app_color.dart';
-import '../../dashboard/page/dashboard_page.dart';
-import '../../home/page/home_page.dart';
-import '../../product/page/product_list_page.dart';
-import '../../profile/page/profile_page.dart';
-import '../../tools/page/tools_page.dart';
+import '../../dashboard/page/dashboard.page.dart';
+import '../../home/page/home.page.dart';
+import '../../product/page/product_list.page.dart';
+import '../../profile/page/profile.page.dart';
+import '../../tools/page/tools.page.dart';
 import '../controller/base_controller.dart';
 
 
