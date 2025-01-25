@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:main_project/src/config/consts/app_size.dart';
 import 'package:main_project/src/domain/profile/controller/profile_modal.controller.dart';
+import 'package:main_project/src/widget/input_textField.widget.dart';
 
 import '../../../config/consts/app_color.dart';
 
 class ProfileEditModal extends StatelessWidget {
   ProfileEditModal({super.key});
 
+  final formKey=GlobalKey<FormState>();
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  ProfileModalController passwordController = Get.find<
-      ProfileModalController>();
+  final TextEditingController _rePasswordController = TextEditingController();
+  ProfileModalController passwordController = Get.put(ProfileModalController());
 
   //ProfileModalController profileModalController=Get.find<ProfileModalController>();
 
@@ -42,6 +45,7 @@ class ProfileEditModal extends StatelessWidget {
                       Text("ویرایش کاربر", style: TextStyle(fontSize: 18)),
                       SizedBox(height: 10),
                       Form(
+                        key: formKey,
                         child: Column(
                           children: [
                             Padding(
@@ -49,14 +53,16 @@ class ProfileEditModal extends StatelessWidget {
                                   horizontal: 30, vertical: 10),
                               child: Directionality(
                                 textDirection: TextDirection.rtl,
-                                child: TextFormField(
+                                child:
+                                InputTextField(controller: _fullNameController,hintText: 'نام و نام خانوادگی',)
+                                /*TextFormField(
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: AppColor.inputColor,
                                     hintText: 'نام و نام خانوادگی',
                                   ),
                                   controller: _fullNameController,
-                                ),
+                                ),*/
                               ),
                             ),
                             Padding(
@@ -85,10 +91,55 @@ class ProfileEditModal extends StatelessWidget {
                                       filled: true,
                                       fillColor: AppColor.inputColor,
                                       hintText: 'پسورد',
+                                      suffixIcon: GestureDetector(
+                                        child: SvgPicture.asset(
+                                          passwordController.isObscured.value
+                                           ? 'assets/svg/eye-opened.svg'
+                                              : 'assets/svg/eye-closed.svg',
 
+                                        ),
+                                        onTap: (){
+                                          passwordController.toggleObscure();
+                                        },
+                                      ),
                                     ),
-                                    obscureText: true,
+                                    obscureText: passwordController.isObscured.value,
                                     controller: _passwordController,
+                                  );
+                                }),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 10),
+                              child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: Obx(() {
+                                  return TextFormField(
+                                    validator: (value) {
+                                      if(value!=_passwordController.text){
+                                        return 'پسوردها با هم مطابقت ندارند';
+                                      }
+                                      return null;
+                                    },
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: AppColor.inputColor,
+                                      hintText: 'ورود مجدد پسورد',
+                                      suffixIcon: GestureDetector(
+                                        child: SvgPicture.asset(
+                                          passwordController.isRepeatObscured.value
+                                              ? 'assets/svg/eye-opened.svg'
+                                              : 'assets/svg/eye-closed.svg',
+
+                                        ),
+                                        onTap: (){
+                                          passwordController.toggleRepeatObscure();
+                                        },
+                                      ),
+                                    ),
+                                    obscureText: passwordController.isRepeatObscured.value,
+                                    controller: _rePasswordController,
                                   );
                                 }),
                               ),
@@ -98,8 +149,11 @@ class ProfileEditModal extends StatelessWidget {
                       ),
                       SizedBox(height: 20),
                       ElevatedButton(
-                        onPressed: () {
-                          Get.back(); // بستن دیالوگ
+                        onPressed: () {if(formKey.currentState!.validate()) {
+                          Get.back();
+                        }else{
+                          Get.snackbar('خطا', 'فیلد ها را به درستی پر کنید');
+                        }
                         },
                         child: Text("بستن"),
                       ),

@@ -3,20 +3,21 @@ import '../config/consts/app_color.dart';
 
 class InputTextField extends StatelessWidget{
   String? labelText;
-  String? hintText;
+  String hintText;
   bool obscureText;
   TextEditingController controller;
 
   InputTextField({super.key,
     this.labelText,
-    this.hintText,
+    required this.hintText,
     this.obscureText=false,
     required this.controller,
 });
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       obscureText: obscureText,
+      controller: controller,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
