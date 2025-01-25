@@ -5,13 +5,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../../../config/consts/app_color.dart';
-import '../controller/slide_controller.dart';
+import '../controller/product_slide.controller.dart';
 
 
 class ProductListPage extends StatelessWidget {
   ProductListPage({super.key});
 
-  final SlideController slideController = Get.find<SlideController>();
+  final ProductSlideController slideController = Get.find<ProductSlideController>();
 
   @override
   Widget build(BuildContext context) {
