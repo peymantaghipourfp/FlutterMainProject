@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:main_project/src/domain/auth/controller/auth_controller.dart';
 import 'package:main_project/src/widget/input_textField.widget.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class RegisterPage extends StatelessWidget {
+  RegisterPage({super.key});
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -16,6 +16,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -38,7 +39,7 @@ class LoginPage extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 1),
-              child: Text('صفحه ورود',
+              child: Text('صفحه ثبت نام',
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
             ),
             Padding(
@@ -92,32 +93,29 @@ class LoginPage extends StatelessWidget {
             ),
 
             Obx(() => authController.isLoading.value?
-                CircularProgressIndicator()
-              : ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColor.blueColor,
-                  minimumSize: Size(80, 45),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                  elevation: 0,
-                ),
-                /*onPressed: (){
-                  Get.toNamed('/base');
-                },*/
-                onPressed: () async{if(formKey.currentState!.validate()) {
-                  await authController.login(
+            CircularProgressIndicator()
+                : ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColor.blueColor,
+                minimumSize: Size(80, 45),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                elevation: 0,
+              ),
+              /*onPressed: (){
+                Get.toNamed('/login');
+              },*/
+              onPressed: () async{if(formKey.currentState!.validate()) {
+                  await authController.register(
                       _emailController.text,
                       _passwordController.text);
                 }
                 },
-                child: Text('وارد شوید', style: TextStyle(
-                  color: AppColor.whiteColor, fontWeight: FontWeight.w700,),
-                ),
+              child: Text('ثبت نام', style: TextStyle(
+                color: AppColor.whiteColor, fontWeight: FontWeight.w700,),
               ),
             ),
-            TextButton(
-                onPressed: (){Get.toNamed('/register');},
-                child: Text('برای ورود ثبت نام کنید'))
+            ),
           ],
         ),
       ),

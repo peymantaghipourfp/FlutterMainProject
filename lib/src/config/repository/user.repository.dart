@@ -12,7 +12,7 @@ class UserRepository {
     _userDio.options.receiveTimeout = Duration(seconds: 5);
   }
 
-  Future<void> singleUser() async{
+  Future<List<dynamic>> singleUser() async{
     try{
       final response=await _userDio.get('/users');
       return response.data;

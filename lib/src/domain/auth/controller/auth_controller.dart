@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:main_project/src/config/repository/auth.repository.dart';
 
 class AuthController extends GetxController{
@@ -49,6 +50,30 @@ class AuthController extends GetxController{
     }finally{
       isLoading.value=false;
     }
+  }
+  Future<void> register(String email,String password)async{
+    final storage=GetStorage();
+    isLoading.value=true;
+    try{
+      final response=await _authRepository.register(email, password);
+      if(response !=null){
+        await storage.write('token', response['token']);
+        await storage.write('id', response['id']);
+        Get.defaultDialog(
+          title: 'موفقیت آمیز',
+          middleText: 'ثبت نام با موفقیت انجام شد',
+          textConfirm: 'بازگشت',
+          onConfirm: () {
+            Get.offNamed('/login');
+          },
+        );
+      }else{
+        Get.snackbar('خطا', 'موفقیت آمیز نبود');
+      }
+    }catch(e){
+      Get.snackbar('خطا', 'موفقیت آمیز نیست');
+    }
+    isLoading.value=false;
   }
 
 }
