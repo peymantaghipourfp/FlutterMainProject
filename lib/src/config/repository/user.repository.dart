@@ -15,7 +15,7 @@ class UserRepository {
   Future<List<dynamic>> singleUser() async{
     try{
       final response=await _userDio.get('/users');
-      return response.data;
+      return response.data['data'];
     }catch(e){
       rethrow;
     }

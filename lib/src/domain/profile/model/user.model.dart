@@ -3,35 +3,27 @@ import 'dart:convert';
 
 UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 
+
 class UserModel {
-  final Data data;
+  final int? id;
+  final String? email;
+  final String? firstName;
+  final String? lastName;
+  final String? avatar;
 
   UserModel({
-    required this.data,
+    this.id,
+    this.email,
+    this.firstName,
+    this.lastName,
+    this.avatar,
   });
-
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    data: Data.fromJson(json["data"]),
-  );
+  factory UserModel.empty() {
+    return UserModel(id: null, firstName: '');
 
 }
 
-class Data {
-  final int id;
-  final String email;
-  final String firstName;
-  final String lastName;
-  final String avatar;
-
-  Data({
-    required this.id,
-    required this.email,
-    required this.firstName,
-    required this.lastName,
-    required this.avatar,
-  });
-
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
     id: json["id"],
     email: json["email"],
     firstName: json["first_name"],

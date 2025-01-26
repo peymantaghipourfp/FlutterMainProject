@@ -54,7 +54,9 @@ class ProfileEditModal extends StatelessWidget {
                               child: Directionality(
                                 textDirection: TextDirection.rtl,
                                 child:
-                                InputTextField(controller: _fullNameController,hintText: 'نام و نام خانوادگی',)
+                                InputTextField(
+                                  controller: _fullNameController,
+                                  hintText: 'نام و نام خانوادگی',)
                                 /*TextFormField(
                                   decoration: InputDecoration(
                                     filled: true,
