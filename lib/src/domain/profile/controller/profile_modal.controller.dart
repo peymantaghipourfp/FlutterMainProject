@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:main_project/src/domain/profile/componnent/matched_user.componnent.dart';
+import 'package:main_project/src/domain/profile/model/user.model.dart';
 
-class ProfileModalController {
+class ProfileModalController extends GetxController {
   var showModal=false.obs;
   var isObscured=true.obs;
   var isRepeatObscured=true.obs;

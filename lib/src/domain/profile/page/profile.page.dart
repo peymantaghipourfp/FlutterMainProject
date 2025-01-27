@@ -9,6 +9,8 @@ import 'package:main_project/src/domain/profile/controller/user.controller.dart'
 import 'package:get_storage/get_storage.dart';
 import 'package:main_project/src/domain/profile/model/user.model.dart';
 
+import '../componnent/matched_user.componnent.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
   @override
@@ -57,107 +59,106 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: SizedBox(
-              width: Get.width,
-              height: Get.height,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 150,
-                      child: Stack(
-                        textDirection: TextDirection.rtl,
-                        children: [
-                          Container(alignment: Alignment.bottomLeft,
-                            color: AppColor.inputColor,
-                            width: Get.width,
-                            height: 100,
-                            child:
-                            ProfileEditModal(),
-                            /*GestureDetector(
-                                onTap: (){
-                                  Get.toNamed('/buyCart');
-                                },
-                                  child: SvgPicture.asset('assets/svg/edit.svg',height: 40,width: 40,)
-                              ), */
-                          ),
-                          Positioned(
-                            top: 40,
-                            right: 10,
-                            child: Card(
-                              color: AppColor.whiteColor,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                  side: BorderSide(
-                                      color: AppColor.whiteColor, width: 2)
+      child: SizedBox(
+        width: Get.width*0.9,
+        height: Get.height*0.9,
+        child: Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.all(8),
+            child: SingleChildScrollView(
+              child: Column(
+                          children: [
+                            SizedBox(
+                              height: 150,
+                              child: Stack(
+                                textDirection: TextDirection.rtl,
+                                children: [
+                                  Container(alignment: Alignment.bottomLeft,
+                                    color: AppColor.inputColor,
+                                    width: double.infinity,
+                                    height: 100,
+                                    child: SizedBox(
+                                        width: 40,
+                                        height: 40,
+                                        child: SvgPicture.asset('assets/svg/edit.svg', height: 40, width: 40,),
+                                    ),
+
+                                    //ProfileEditModal(),
+                                  ),
+                                  Positioned(
+                                    top: 40,
+                                    right: 10,
+                                    child: Card(
+                                      color: AppColor.whiteColor,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(40),
+                                          side: BorderSide(
+                                              color: AppColor.whiteColor, width: 2)
+                                      ),
+                                      child: SizedBox(
+                                        width: 100,
+                                        height: 100,
+                                        child: SvgPicture.asset(
+                                          'assets/svg/person.svg',
+                                          fit: BoxFit.cover,),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              child: SvgPicture.asset(
-                                'assets/svg/person.svg', height: 100,
-                                width: 100,
-                                fit: BoxFit.cover,),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20, top: 10),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Obx(
-                                () {
-                                  UserModel matchUser = matchedUser();
-                                  if (matchUser != null) {
-                                    return
-                                      Text(
-                                        '${matchUser.firstName.toString()} ${matchUser.lastName.toString()}');
-                                  } else {
-                                    return Text('');
-                                  }
-                                },
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20, top: 10),
+                              child: Column(
+                                textDirection: TextDirection.rtl,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                       Obx(
+                                          () {
+                                            UserModel matchUser = matchedUser(userController);
+                                            if (matchUser != null) {
+                                              return
+                                                Text(
+                                                  '${matchUser.firstName.toString()} ${matchUser.lastName.toString()}',
+                                                  overflow: TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                );
+                                            } else {
+                                              return Text('');
+                                            }
+                                          },
+                                        ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                       Obx(
+                                              () {
+                                            UserModel matchUser = matchedUser(userController);
+                                            if (matchUser != null) {
+                                              return Text(matchUser.email.toString(),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                              );
+                                            } else {
+                                              return Text('');
+                                            }
+                                          },
+                                        ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Obx(
-                                    () {
-                                  UserModel matchUser = matchedUser();
-                                  if (matchUser != null) {
-                                    return Text(matchUser.email.toString());
-                                  } else {
-                                    return Text('');
-                                  }
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                            ),
+                          ],
                 ),
-              ),
             ),
           ),
         ),
       ),
     );
-  }
-
-  UserModel matchedUser() {
-    final matchUser = userController.userList
-        .firstWhere((user) =>
-            storage.read('id') == user.id);
-    return matchUser;
   }
 }

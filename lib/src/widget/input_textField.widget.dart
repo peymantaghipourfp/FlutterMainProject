@@ -6,16 +6,19 @@ class InputTextField extends StatelessWidget{
   String hintText;
   bool obscureText;
   TextEditingController controller;
+  String? initialValue;
 
   InputTextField({super.key,
     this.labelText,
     required this.hintText,
     this.obscureText=false,
     required this.controller,
+    this.initialValue
 });
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
       obscureText: obscureText,
       controller: controller,
       decoration: InputDecoration(

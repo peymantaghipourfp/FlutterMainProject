@@ -101,15 +101,15 @@ class LoginPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20)),
                   elevation: 0,
                 ),
-                /*onPressed: (){
+                onPressed: (){
                   Get.toNamed('/base');
-                },*/
-                onPressed: () async{if(formKey.currentState!.validate()) {
+                },
+                /*onPressed: () async{if(formKey.currentState!.validate()) {
                   await authController.login(
                       _emailController.text,
                       _passwordController.text);
                 }
-                },
+                },*/
                 child: Text('وارد شوید', style: TextStyle(
                   color: AppColor.whiteColor, fontWeight: FontWeight.w700,),
                 ),

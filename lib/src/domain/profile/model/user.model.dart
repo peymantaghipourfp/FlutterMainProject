@@ -5,23 +5,19 @@ UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 
 
 class UserModel {
-  final int? id;
-  final String? email;
-  final String? firstName;
-  final String? lastName;
-  final String? avatar;
+  final int id;
+  final String email;
+  final String firstName;
+  final String lastName;
+  final String avatar;
 
   UserModel({
-    this.id,
-    this.email,
-    this.firstName,
-    this.lastName,
-    this.avatar,
+    required this.id,
+    required this.email,
+    required this.firstName,
+    required this.lastName,
+    required this.avatar,
   });
-  factory UserModel.empty() {
-    return UserModel(id: null, firstName: '');
-
-}
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
     id: json["id"],
