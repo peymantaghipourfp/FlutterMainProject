@@ -55,6 +55,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   var userController = Get.find<UserController>();
+  AuthController authController=Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -77,30 +78,57 @@ class _ProfilePageState extends State<ProfilePage> {
                                     color: AppColor.inputColor,
                                     width: double.infinity,
                                     height: 100,
-                                    child: SizedBox(
+                                    child:
+                                    /*SizedBox(
                                         width: 40,
                                         height: 40,
                                         child: SvgPicture.asset('assets/svg/edit.svg', height: 40, width: 40,),
-                                    ),
-
-                                    //ProfileEditModal(),
+                                    ),*/
+                                    ProfileEditModal(),
                                   ),
+                                  Container(
+                                      padding: EdgeInsets.only(left: 25),
+                                      alignment: Alignment.topLeft,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          authController.logout();
+                                        },
+                                        child: Text('خروج',),),),
+                                  /*Container(
+                                      alignment: Alignment.topLeft,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          authController.logout();
+                                        },
+                                        child: SvgPicture.asset('assets/svg/exit.svg',),),),*/
                                   Positioned(
                                     top: 40,
                                     right: 10,
                                     child: Card(
                                       color: AppColor.whiteColor,
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(40),
+                                          borderRadius: BorderRadius.circular(50),
                                           side: BorderSide(
                                               color: AppColor.whiteColor, width: 2)
                                       ),
                                       child: SizedBox(
                                         width: 100,
                                         height: 100,
-                                        child: SvgPicture.asset(
+                                        child: Obx(
+                                              () {
+                                            UserModel? matchUser = matchedUser(userController);
+                                            if (matchUser != null) {
+                                              return
+                                                ClipRRect(borderRadius: BorderRadius.circular(50),
+                                                    child: Image.network(matchUser.avatar,fit: BoxFit.cover,));
+                                            } else {
+                                              return Text('');
+                                            }
+                                          },
+                                        ),
+                                        /*SvgPicture.asset(
                                           'assets/svg/person.svg',
-                                          fit: BoxFit.cover,),
+                                          fit: BoxFit.cover,),*/
                                       ),
                                     ),
                                   ),
@@ -117,11 +145,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                     children: [
                                        Obx(
                                           () {
-                                            UserModel matchUser = matchedUser(userController);
+                                            UserModel? matchUser = matchedUser(userController);
                                             if (matchUser != null) {
                                               return
                                                 Text(
-                                                  '${matchUser.firstName.toString()} ${matchUser.lastName.toString()}',
+                                                  '${matchUser.firstName} ${matchUser.lastName}',
                                                   overflow: TextOverflow.ellipsis,
                                                   maxLines: 1,
                                                 );
@@ -137,9 +165,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                     children: [
                                        Obx(
                                               () {
-                                            UserModel matchUser = matchedUser(userController);
+                                            UserModel? matchUser = matchedUser(userController);
                                             if (matchUser != null) {
-                                              return Text(matchUser.email.toString(),
+                                              return Text(matchUser.email,
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 1,
                                               );

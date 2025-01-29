@@ -12,7 +12,10 @@ class _ToolsPageState extends State<ToolsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('تنظیمات'),centerTitle: true,),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text('تنظیمات'),
+        centerTitle: true,),
     );
   }
 }

@@ -6,6 +6,24 @@ import 'package:main_project/src/config/repository/auth.repository.dart';
 class AuthController extends GetxController{
   final AuthRepository _authRepository=AuthRepository();
   var isLoading=false.obs;
+  final storage=GetStorage();
+
+  @override
+  void onInit() {
+    super.onInit();
+    /*WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkLoginStatus();
+    },);*/
+  }
+
+  void _checkLoginStatus(){
+    String? token=storage.read('token');
+    if(token!=null && token.isNotEmpty) {
+      Future.delayed(Duration(milliseconds: 500), () {
+        Get.offNamed('/base'); // انتقال امن به صفحه اصلی
+      });
+    }
+  }
 
   String? validateEmail(String? value) {
     const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
@@ -39,9 +57,13 @@ class AuthController extends GetxController{
     isLoading.value=true;
     try {
       final response = await _authRepository.login(email, password);
-      if(response !=null){
-        Get.snackbar('موفقیت آمیز', 'شما با موفقیت وارد شدید: ${response['token']}');
-        Get.toNamed('/base');
+      if(response !=null && response['token']!=null){
+        await storage.write('token', response['token']);
+        await storage.write('id', response['id'] ?? '');
+        Get.snackbar('موفقیت آمیز', 'شما با موفقیت وارد شدید');
+        Future.delayed(Duration(milliseconds: 500), () {
+          Get.toNamed('/base');
+        });
       }else{
         Get.snackbar('ناموفق', 'ورود ناموفق');
       }
@@ -52,28 +74,35 @@ class AuthController extends GetxController{
     }
   }
   Future<void> register(String email,String password)async{
-    final storage=GetStorage();
+
     isLoading.value=true;
     try{
       final response=await _authRepository.register(email, password);
-      if(response !=null){
+      if(response !=null && response['token'] != null){
         await storage.write('token', response['token']);
-        await storage.write('id', response['id']);
+        await storage.write('id', response['id'] ?? '');
         Get.defaultDialog(
           title: 'موفقیت آمیز',
           middleText: 'ثبت نام با موفقیت انجام شد',
           textConfirm: 'بازگشت',
           onConfirm: () {
-            Get.offNamed('/login');
+            Future.delayed(Duration(milliseconds: 500), () {
+              Get.offNamed('/base');
+            });
           },
         );
       }else{
         Get.snackbar('خطا', 'موفقیت آمیز نبود');
       }
     }catch(e){
-      Get.snackbar('خطا', 'موفقیت آمیز نیست');
+      Get.snackbar('خطا', 'موفقیت آمیز نیست:$e');
     }
     isLoading.value=false;
   }
-
+  Future<void> logout() async {
+    await storage.remove('token'); // حذف توکن
+    Future.delayed(Duration(milliseconds: 500), () {
+      Get.offAllNamed('/login'); // انتقال امن به صفحه ورود
+    });
+  }
 }

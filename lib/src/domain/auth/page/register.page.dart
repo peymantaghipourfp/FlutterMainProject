@@ -16,7 +16,7 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
-      appBar: AppBar(),
+      appBar: AppBar(automaticallyImplyLeading: false,),
       body: SingleChildScrollView(
         child: Column(
           children: [

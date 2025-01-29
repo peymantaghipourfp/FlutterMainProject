@@ -11,7 +11,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('خانه'),centerTitle: true,),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text('خانه'),
+        centerTitle: true,),
     );
   }
 }

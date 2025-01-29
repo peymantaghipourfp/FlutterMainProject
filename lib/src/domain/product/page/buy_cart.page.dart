@@ -8,7 +8,9 @@ class BuyCartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(title: Text('BuyCart'),),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text('BuyCart'),),
         body: SizedBox(
           width: Get.width,
           height: Get.height,

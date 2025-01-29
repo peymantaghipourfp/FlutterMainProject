@@ -17,6 +17,7 @@ class ProductListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text('لیست محصولات'),
         centerTitle: true,
       ),

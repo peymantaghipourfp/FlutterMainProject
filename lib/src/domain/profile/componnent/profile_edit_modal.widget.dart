@@ -22,7 +22,7 @@ class _ProfileEditModalState extends State<ProfileEditModal> {
 
   late TextEditingController _fullNameController;
 
-  final TextEditingController _emailController = TextEditingController();
+  late TextEditingController _emailController;
 
   final TextEditingController _passwordController = TextEditingController();
 
@@ -36,17 +36,13 @@ class _ProfileEditModalState extends State<ProfileEditModal> {
   void initState() {
     final user=matchedUser(userController);
     _fullNameController=TextEditingController(
-     text:  user.firstName
+     text:  '${user?.firstName}' ' ' '${user?.lastName}'
+    );
+    _emailController=TextEditingController(
+      text: user?.email
     );
     super.initState();
   }
-  @override
-  void dispose(){
-    _fullNameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _rePasswordController.dispose();
-}
 
   @override
   Widget build(BuildContext context) {
@@ -84,18 +80,18 @@ class _ProfileEditModalState extends State<ProfileEditModal> {
                                   child: Directionality(
                                     textDirection: TextDirection.rtl,
                                     child:
-                                    InputTextField(
+                                    /*InputTextField(
                                       controller: _fullNameController,
                                       hintText: 'نام و نام خانوادگی',
-                                    ),
-                                    /*TextFormField(
+                                    ),*/
+                                    TextFormField(
                                     decoration: InputDecoration(
                                       filled: true,
                                       fillColor: AppColor.inputColor,
                                       hintText: 'نام و نام خانوادگی',
                                     ),
                                     controller: _fullNameController,
-                                  ),*/
+                                  ),
                                   ),
                                 ),
                                 Padding(
