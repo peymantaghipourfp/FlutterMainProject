@@ -11,17 +11,13 @@ class AuthController extends GetxController{
   @override
   void onInit() {
     super.onInit();
-    /*WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkLoginStatus();
-    },);*/
   }
 
   void _checkLoginStatus(){
     String? token=storage.read('token');
-    if(token!=null && token.isNotEmpty) {
-      Future.delayed(Duration(milliseconds: 500), () {
-        Get.offNamed('/base'); // انتقال امن به صفحه اصلی
-      });
+    if(token!=null) {
+        Get.offNamed('/login'); // انتقال امن به صفحه اصلی
     }
   }
 
@@ -57,12 +53,12 @@ class AuthController extends GetxController{
     isLoading.value=true;
     try {
       final response = await _authRepository.login(email, password);
-      if(response !=null && response['token']!=null){
-        await storage.write('token', response['token']);
-        await storage.write('id', response['id'] ?? '');
+      if(response !=null){
+        /*await storage.write('token', response['token']);
+        await storage.write('id', response['id'] ?? '');*/
         Get.snackbar('موفقیت آمیز', 'شما با موفقیت وارد شدید');
         Future.delayed(Duration(milliseconds: 500), () {
-          Get.toNamed('/base');
+          Get.offNamed('/base');
         });
       }else{
         Get.snackbar('ناموفق', 'ورود ناموفق');
@@ -78,7 +74,7 @@ class AuthController extends GetxController{
     isLoading.value=true;
     try{
       final response=await _authRepository.register(email, password);
-      if(response !=null && response['token'] != null){
+      if(response !=null){
         await storage.write('token', response['token']);
         await storage.write('id', response['id'] ?? '');
         Get.defaultDialog(
@@ -87,7 +83,7 @@ class AuthController extends GetxController{
           textConfirm: 'بازگشت',
           onConfirm: () {
             Future.delayed(Duration(milliseconds: 500), () {
-              Get.offNamed('/base');
+              Get.offNamed('/login');
             });
           },
         );

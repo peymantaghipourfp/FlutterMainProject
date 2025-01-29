@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -29,11 +29,13 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
     );
   }
-}
-/*
+}*/
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:main_project/src/config/consts/app_color.dart';
+import 'package:main_project/src/domain/dashboard/componnent/indicator.dart';
+import '../componnent/app_colors.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -47,86 +49,110 @@ class _DashboardPageState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("نمودار خطی")),
+      appBar: AppBar(
+        title: Text("داشبورد"),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        backgroundColor: AppColor.inputColor,
+
+      ),
       body: SizedBox(
-        width: Get.width*0.9,
-        height: Get.height*0.5,
-        child: AspectRatio(
-          aspectRatio: 1.3,
-          child: Row(
-            children: <Widget>[
-              const SizedBox(
-                height: 18,
-              ),
-              Expanded(
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: PieChart(
-                    PieChartData(
-                      pieTouchData: PieTouchData(
-                        touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                          setState(() {
-                            if (!event.isInterestedForInteractions ||
-                                pieTouchResponse == null ||
-                                pieTouchResponse.touchedSection == null) {
-                              touchedIndex = -1;
-                              return;
-                            }
-                            touchedIndex = pieTouchResponse
-                                .touchedSection!.touchedSectionIndex;
-                          });
-                        },
-                      ),
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
-                      sectionsSpace: 0,
-                      centerSpaceRadius: 40,
-                      sections: showingSections(),
+        width: Get.width,
+        height: Get.height,
+        child: Container(color: AppColor.inputColor,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Card(
+                  child: AspectRatio(
+                    aspectRatio: 1.3,
+                    child: Row(
+                      children: <Widget>[
+                        const SizedBox(
+                          height: 18,
+                        ),
+                        Expanded(
+                          child: AspectRatio(
+                            aspectRatio: 1,
+                            child: PieChart(
+                              PieChartData(
+                                pieTouchData: PieTouchData(
+                                  touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                                    setState(() {
+                                      if (!event.isInterestedForInteractions ||
+                                          pieTouchResponse == null ||
+                                          pieTouchResponse.touchedSection == null) {
+                                        touchedIndex = -1;
+                                        return;
+                                      }
+                                      touchedIndex = pieTouchResponse
+                                          .touchedSection!.touchedSectionIndex;
+                                    });
+                                  },
+                                ),
+                                borderData: FlBorderData(
+                                  show: false,
+                                ),
+                                sectionsSpace: 0,
+                                centerSpaceRadius: 40,
+                                sections: showingSections(),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          child:
+                          Column(mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              Card(
+                                child: Text('چارت'),
+                              ),
+                              Indicator(
+                                color: AppColors.contentColorBlue,
+                                text: 'فروش کلاسیک',
+                                isSquare: true,
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Indicator(
+                                color: AppColors.contentColorYellow,
+                                text: 'فروش چرم ',
+                                isSquare: true,
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Indicator(
+                                color: AppColors.contentColorPurple,
+                                text: 'فروش کتونی',
+                                isSquare: true,
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Indicator(
+                                color: AppColors.contentColorGreen,
+                                text: 'فروش کالج',
+                                isSquare: true,
+                              ),
+                              SizedBox(
+                                height: 18,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 28,
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ),
-              const Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Indicator(
-                    color: AppColors.contentColorBlue,
-                    text: 'First',
-                    isSquare: true,
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Indicator(
-                    color: AppColors.contentColorYellow,
-                    text: 'Second',
-                    isSquare: true,
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Indicator(
-                    color: AppColors.contentColorPurple,
-                    text: 'Third',
-                    isSquare: true,
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Indicator(
-                    color: AppColors.contentColorGreen,
-                    text: 'Fourth',
-                    isSquare: true,
-                  ),
-                  SizedBox(
-                    height: 18,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                width: 28,
               ),
             ],
           ),
@@ -134,7 +160,7 @@ class _DashboardPageState extends State {
       ),
     );
   }
-}
+
 List<PieChartSectionData> showingSections() {
   return List.generate(4, (i) {
     final isTouched = i == touchedIndex;
@@ -199,6 +225,6 @@ List<PieChartSectionData> showingSections() {
     }
   });
 }
-*/
+}
 
 
