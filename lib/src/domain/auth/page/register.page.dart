@@ -9,6 +9,7 @@ class RegisterPage extends StatelessWidget {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _fullNameController=TextEditingController();
   final formKey = GlobalKey<FormState>();
   AuthController authController = Get.find<AuthController>();
 
@@ -52,6 +53,22 @@ class RegisterPage extends StatelessWidget {
                 key: formKey,
                 child: Column(
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30),
+                      child: Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: AppColor.inputColor,
+                            hintText: 'نام و نام خانوادگی',
+                            labelText: 'لطفا نام و نام خانوادگی را وارد کنید',
+                          ),
+
+                          controller: _fullNameController,
+                        ),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 30, bottom: 10),
                       child: Directionality(
@@ -107,6 +124,7 @@ class RegisterPage extends StatelessWidget {
               },*/
               onPressed: () async{if(formKey.currentState!.validate()) {
                   await authController.register(
+                      _fullNameController.text,
                       _emailController.text,
                       _passwordController.text);
                 }

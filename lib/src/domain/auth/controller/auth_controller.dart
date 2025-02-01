@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:main_project/src/config/repository/auth.repository.dart';
 
 class AuthController extends GetxController{
@@ -15,9 +16,9 @@ class AuthController extends GetxController{
   }
 
   void _checkLoginStatus(){
-    String? token=storage.read('token');
-    if(token!=null) {
-        Get.offNamed('/login'); // انتقال امن به صفحه اصلی
+    String? accessToken=storage.read('accessToken');
+    if(accessToken!=null) {
+        Get.offNamed('/base'); // انتقال امن به صفحه اصلی
     }
   }
 
@@ -54,8 +55,9 @@ class AuthController extends GetxController{
     try {
       final response = await _authRepository.login(email, password);
       if(response !=null){
-        /*await storage.write('token', response['token']);
-        await storage.write('id', response['id'] ?? '');*/
+        await storage.write('accessToken', response['accessToken']);
+        await storage.write('refreshToken', response['refreshToken']);
+        await storage.write('message', response['message']);
         Get.snackbar('موفقیت آمیز', 'شما با موفقیت وارد شدید');
         Future.delayed(Duration(milliseconds: 500), () {
           Get.offNamed('/base');
@@ -69,14 +71,12 @@ class AuthController extends GetxController{
       isLoading.value=false;
     }
   }
-  Future<void> register(String email,String password)async{
+  Future<void> register(String fullName,String email,String password)async{
 
     isLoading.value=true;
     try{
-      final response=await _authRepository.register(email, password);
+      final response=await _authRepository.register(fullName,email, password);
       if(response !=null){
-        await storage.write('token', response['token']);
-        await storage.write('id', response['id'] ?? '');
         Get.defaultDialog(
           title: 'موفقیت آمیز',
           middleText: 'ثبت نام با موفقیت انجام شد',
@@ -96,9 +96,20 @@ class AuthController extends GetxController{
     isLoading.value=false;
   }
   Future<void> logout() async {
-    await storage.remove('token'); // حذف توکن
+    await storage.remove('accessToken'); // حذف توکن
     Future.delayed(Duration(milliseconds: 500), () {
       Get.offAllNamed('/login'); // انتقال امن به صفحه ورود
     });
   }
+
+ /*extractUserInfoFromToken(){
+    String? accessToken=storage.read('accessToken');
+    if(accessToken!=null && accessToken.isNotEmpty){
+      Map<String,dynamic> decodedToken=JwtDecoder.decode(accessToken);
+      String? email=decodedToken['email'];
+      if(email!=null){
+        storage.write('email', email);
+      }
+    }
+  }*/
 }

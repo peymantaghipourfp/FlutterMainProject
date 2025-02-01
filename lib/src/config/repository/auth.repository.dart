@@ -7,7 +7,7 @@ class AuthRepository{
   Dio _authDio=Dio();
 
   AuthRepository(){
-    _authDio.options.baseUrl='https://reqres.in/api';
+    _authDio.options.baseUrl='https://peyman-auth.liara.run/api/Auth';
     _authDio.options.connectTimeout=Duration(seconds: 5);
     _authDio.options.receiveTimeout=Duration(seconds: 5);
 }
@@ -29,11 +29,12 @@ Future<Map<String,dynamic>?> login(String email,String password) async{
    }
     return null;
 }
-Future<Map<String,dynamic>?> register(String email,String password)async{
+Future<Map<String,dynamic>?> register(String fullName,String email,String password)async{
     try{
       final response=await _authDio.post(
           '/register',
         data: {
+            'fullName':fullName,
             'email':email,
           'password':password,
         },

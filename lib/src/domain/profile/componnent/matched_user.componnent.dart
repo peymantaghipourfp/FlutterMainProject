@@ -1,8 +1,6 @@
 
+/*
 
-import 'package:main_project/src/domain/profile/controller/user.controller.dart';
-
-import '../model/user.model.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -15,4 +13,4 @@ UserModel? matchedUser(UserController userController) {
     storage.read('id') == user.id);
     return matchUser;
 
-}
+}*/

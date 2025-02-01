@@ -3,186 +3,107 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:main_project/src/config/consts/app_color.dart';
 import 'package:get/get.dart';
 import 'package:main_project/src/domain/auth/controller/auth_controller.dart';
-import 'package:main_project/src/domain/auth/model/register_model.dart';
 import 'package:main_project/src/domain/profile/componnent/profile_edit_modal.widget.dart';
-import 'package:main_project/src/domain/profile/controller/user.controller.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:main_project/src/domain/profile/model/user.model.dart';
+import 'package:main_project/src/domain/profile/controller/profile_controller.dart';
 
-import '../componnent/matched_user.componnent.dart';
-
-class ProfilePage extends StatefulWidget {
+class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-/*class _ProfilePageState extends State<ProfilePage> {
-  var userController = Get.find<UserController>();
-  var authController=Get.find<AuthController>();
-  final storage=GetStorage();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: SizedBox(
-          width: Get.width,
-          height: Get.height,
-          child: Column(
-            children: [
-              Obx(() {
-                if (userController.isLoading.value) {
-                  return Text('خطا',style: TextStyle(fontSize: 30),);
-                }
-                final matchUser=userController.userList.firstWhere(
-                    (user)=>storage.read('id')==user.id
-                );
-                if(matchUser!=null){
-                  return Text(matchUser.firstName.toString());
-                }else{
-                  return Text('نامشخص');
-                }
-              },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}*/
-
-class _ProfilePageState extends State<ProfilePage> {
-  var userController = Get.find<UserController>();
-  AuthController authController=Get.find<AuthController>();
-
-  @override
-  Widget build(BuildContext context) {
+    /*ProfileController profileController = Get.put(ProfileController());
+    profileController.loadUserData();
+*/
     return SafeArea(
       child: SizedBox(
-        width: Get.width*0.9,
-        height: Get.height*0.9,
+        width: Get.width * 0.9,
+        height: Get.height * 0.9,
         child: Scaffold(
           body: Padding(
             padding: const EdgeInsets.all(8),
             child: SingleChildScrollView(
               child: Column(
-                          children: [
-                            SizedBox(
-                              height: 150,
-                              child: Stack(
-                                textDirection: TextDirection.rtl,
-                                children: [
-                                  Container(alignment: Alignment.bottomLeft,
-                                    color: AppColor.inputColor,
-                                    width: double.infinity,
-                                    height: 100,
-                                    child:
-                                    /*SizedBox(
+                children: [
+                  SizedBox(
+                    height: 150,
+                    child: Stack(
+                      textDirection: TextDirection.rtl,
+                      children: [
+                        Container(alignment: Alignment.bottomLeft,
+                          color: AppColor.inputColor,
+                          width: double.infinity,
+                          height: 100,
+                          child:
+                          SizedBox(
                                         width: 40,
                                         height: 40,
                                         child: SvgPicture.asset('assets/svg/edit.svg', height: 40, width: 40,),
-                                    ),*/
-                                    ProfileEditModal(),
-                                  ),
-                                  Container(
-                                      padding: EdgeInsets.only(left: 25),
-                                      alignment: Alignment.topLeft,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          authController.logout();
-                                        },
-                                        child: Text('خروج',),),),
-                                  /*Container(
+                                    ),
+                          //ProfileEditModal(),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(left: 25),
+                          alignment: Alignment.topLeft,
+                          child: GestureDetector(
+                            onTap: () {
+                              /*AuthController authController=Get.find<AuthController>();
+                              authController.logout();*/
+                            },
+                            child: Text('خروج',),),),
+                        /*Container(
                                       alignment: Alignment.topLeft,
                                       child: GestureDetector(
                                         onTap: () {
                                           authController.logout();
                                         },
                                         child: SvgPicture.asset('assets/svg/exit.svg',),),),*/
-                                  Positioned(
-                                    top: 40,
-                                    right: 10,
-                                    child: Card(
-                                      color: AppColor.whiteColor,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(50),
-                                          side: BorderSide(
-                                              color: AppColor.whiteColor, width: 2)
-                                      ),
-                                      child: SizedBox(
-                                        width: 100,
-                                        height: 100,
-                                        child: Obx(
-                                              () {
-                                            UserModel? matchUser = matchedUser(userController);
-                                            if (matchUser != null) {
-                                              return
-                                                ClipRRect(borderRadius: BorderRadius.circular(50),
-                                                    child: Image.network(matchUser.avatar,fit: BoxFit.cover,));
-                                            } else {
-                                              return Text('');
-                                            }
-                                          },
-                                        ),
-                                        /*SvgPicture.asset(
-                                          'assets/svg/person.svg',
-                                          fit: BoxFit.cover,),*/
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                        Positioned(
+                          top: 40,
+                          right: 10,
+                          child: Card(
+                            color: AppColor.whiteColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                                side: BorderSide(
+                                    color: AppColor.whiteColor, width: 2)
+                            ),
+                            child: SizedBox(
+                              width: 100,
+                              height: 100,
+                              child:
+                              ClipRRect(borderRadius: BorderRadius.circular(50),
+                                child: SvgPicture.asset(
+                                  'assets/svg/person.svg',
+                                  fit: BoxFit.cover,),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 20, top: 10),
-                              child: Column(
-                                textDirection: TextDirection.rtl,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                       Obx(
-                                          () {
-                                            UserModel? matchUser = matchedUser(userController);
-                                            if (matchUser != null) {
-                                              return
-                                                Text(
-                                                  '${matchUser.firstName} ${matchUser.lastName}',
-                                                  overflow: TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                );
-                                            } else {
-                                              return Text('');
-                                            }
-                                          },
-                                        ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                       Obx(
-                                              () {
-                                            UserModel? matchUser = matchedUser(userController);
-                                            if (matchUser != null) {
-                                              return Text(matchUser.email,
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                              );
-                                            } else {
-                                              return Text('');
-                                            }
-                                          },
-                                        ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20, top: 10),
+                    child: Column(
+                      textDirection: TextDirection.rtl,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            /*Obx(() {
+                              return profileController.isLoading.value
+                                ? CircularProgressIndicator()
+                                  : Text(profileController.email.value ?? '');
+                            }),*/
+                            Text('email'),
                           ],
-                ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

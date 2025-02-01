@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:main_project/src/config/consts/app_size.dart';
+import 'package:main_project/src/domain/auth/controller/auth_controller.dart';
 import 'package:main_project/src/domain/profile/componnent/matched_user.componnent.dart';
 import 'package:main_project/src/domain/profile/controller/profile_modal.controller.dart';
-import 'package:main_project/src/domain/profile/controller/user.controller.dart';
+
 import 'package:main_project/src/widget/input_textField.widget.dart';
 
 import '../../../config/consts/app_color.dart';
-import '../model/user.model.dart';
 
 class ProfileEditModal extends StatefulWidget {
   ProfileEditModal({super.key});
@@ -20,9 +20,9 @@ class ProfileEditModal extends StatefulWidget {
 class _ProfileEditModalState extends State<ProfileEditModal> {
   final formKey = GlobalKey<FormState>();
 
-  late TextEditingController _fullNameController;
+  final TextEditingController _fullNameController=TextEditingController();
 
-  late TextEditingController _emailController;
+  final TextEditingController _emailController=TextEditingController();
 
   final TextEditingController _passwordController = TextEditingController();
 
@@ -30,19 +30,8 @@ class _ProfileEditModalState extends State<ProfileEditModal> {
 
   //ProfileModalController profileModalController = Get.put(ProfileModalController());
   ProfileModalController profileModalController=Get.find<ProfileModalController>();
-  var userController=Get.find<UserController>();
 
-  @override
-  void initState() {
-    final user=matchedUser(userController);
-    _fullNameController=TextEditingController(
-     text:  '${user?.firstName}' ' ' '${user?.lastName}'
-    );
-    _emailController=TextEditingController(
-      text: user?.email
-    );
-    super.initState();
-  }
+
 
   @override
   Widget build(BuildContext context) {

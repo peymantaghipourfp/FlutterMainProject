@@ -3,7 +3,6 @@ import 'package:main_project/src/config/routes/bindings/auth.bindings.dart';
 import 'package:main_project/src/config/routes/bindings/base.bindings.dart';
 import 'package:main_project/src/config/routes/bindings/splash.bindings.dart';
 import 'package:main_project/src/config/routes/bindings/user.bindings.dart';
-import 'package:main_project/src/domain/profile/controller/user.controller.dart';
 import '../../domain/auth/page/login.page.dart';
 import '../../domain/auth/page/register.page.dart';
 import '../../domain/base/page/base.page.dart';
@@ -15,7 +14,7 @@ class RoutePage {
     GetPage(name: initialRoute, page: ()=>SplashPage(), binding: SplashBinding()),
     GetPage(name: '/login', page: ()=>LoginPage(),binding: AuthBindings()),
     GetPage(name: '/register', page: ()=>RegisterPage(),binding: AuthBindings()),
-    GetPage(name: '/base', page: ()=>BasePage(),bindings:[ BaseBindings(),UserBindings()]),
+    GetPage(name: '/base', page: ()=>BasePage(),binding:BaseBindings()),
     GetPage(name: '/buyCart', page: ()=>BuyCartPage()),
   ];
   static String initialRoute='/splash';
