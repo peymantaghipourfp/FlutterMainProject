@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/image.dart';
 import 'package:get/get.dart';
 import 'package:main_project/src/config/consts/app_image.dart';
 
-class ProductSlideController extends GetxController {
+class ProductController extends GetxController {
   var images=ImageSlide.slides.obs;
   var imageList=ImageSlide.imageList;
   var currentIndex=0.obs;

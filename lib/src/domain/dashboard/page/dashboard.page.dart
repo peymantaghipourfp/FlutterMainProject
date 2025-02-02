@@ -35,7 +35,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:main_project/src/config/consts/app_color.dart';
 import 'package:main_project/src/domain/dashboard/componnent/indicator.dart';
-import 'package:main_project/src/domain/dashboard/controller/dashboard_controller.dart';
+import 'package:main_project/src/domain/dashboard/controller/dashboard.controller.dart';
 import '../componnent/app_colors.dart';
 
 class DashboardPage extends StatelessWidget {

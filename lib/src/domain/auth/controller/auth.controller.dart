@@ -9,18 +9,7 @@ class AuthController extends GetxController{
   var isLoading=false.obs;
   final storage=GetStorage();
 
-  @override
-  void onInit() {
-    super.onInit();
-      _checkLoginStatus();
-  }
 
-  void _checkLoginStatus(){
-    String? accessToken=storage.read('accessToken');
-    if(accessToken!=null) {
-        Get.offNamed('/base'); // انتقال امن به صفحه اصلی
-    }
-  }
 
   String? validateEmail(String? value) {
     const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
@@ -95,12 +84,7 @@ class AuthController extends GetxController{
     }
     isLoading.value=false;
   }
-  Future<void> logout() async {
-    await storage.remove('accessToken'); // حذف توکن
-    Future.delayed(Duration(milliseconds: 500), () {
-      Get.offAllNamed('/login'); // انتقال امن به صفحه ورود
-    });
-  }
+
 
  /*extractUserInfoFromToken(){
     String? accessToken=storage.read('accessToken');

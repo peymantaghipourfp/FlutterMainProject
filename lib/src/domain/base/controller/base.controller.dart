@@ -9,7 +9,15 @@ class BaseController extends GetxController {
   var navIndex = 2.obs;
 
   pageChange(int i){
+    navIndex.value = i;
     pageController.jumpToPage(i);
+    update();
   }
-
+PageController newPageController(){
+    return PageController(initialPage: 2);
+}
+  void resetPage(){
+    navIndex.value=2;
+    pageController.jumpToPage(2);
+  }
 }

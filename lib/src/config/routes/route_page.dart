@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:main_project/src/config/routes/bindings/auth.bindings.dart';
 import 'package:main_project/src/config/routes/bindings/base.bindings.dart';
 import 'package:main_project/src/config/routes/bindings/splash.bindings.dart';
-import 'package:main_project/src/config/routes/bindings/user.bindings.dart';
 import '../../domain/auth/page/login.page.dart';
 import '../../domain/auth/page/register.page.dart';
 import '../../domain/base/page/base.page.dart';

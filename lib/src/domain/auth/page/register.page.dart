@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:main_project/src/config/consts/app_color.dart';
 import 'package:get/get.dart';
-import 'package:main_project/src/domain/auth/controller/auth_controller.dart';
+import 'package:main_project/src/domain/auth/controller/auth.controller.dart';
 import 'package:main_project/src/widget/input_textField.widget.dart';
 
 class RegisterPage extends StatelessWidget {

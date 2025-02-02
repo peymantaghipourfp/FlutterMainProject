@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:main_project/src/config/consts/app_color.dart';
 import 'package:get/get.dart';
-import 'package:main_project/src/domain/auth/controller/auth_controller.dart';
-import 'package:main_project/src/domain/profile/componnent/profile_edit_modal.widget.dart';
+import 'package:main_project/src/domain/auth/controller/auth.controller.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:main_project/src/domain/profile/controller/profile_controller.dart';
+import 'package:main_project/src/domain/profile/controller/profile.controller.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    /*ProfileController profileController = Get.put(ProfileController());
-    profileController.loadUserData();
-*/
+    ProfileController profileController = Get.find<ProfileController>();
+
+
     return SafeArea(
       child: SizedBox(
         width: Get.width * 0.9,
@@ -40,15 +39,13 @@ class ProfilePage extends StatelessWidget {
                                         height: 40,
                                         child: SvgPicture.asset('assets/svg/edit.svg', height: 40, width: 40,),
                                     ),
-                          //ProfileEditModal(),
                         ),
                         Container(
                           padding: EdgeInsets.only(left: 25),
                           alignment: Alignment.topLeft,
                           child: GestureDetector(
                             onTap: () {
-                              /*AuthController authController=Get.find<AuthController>();
-                              authController.logout();*/
+                              profileController.logout();
                             },
                             child: Text('خروج',),),),
                         /*Container(
