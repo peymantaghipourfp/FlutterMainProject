@@ -11,7 +11,7 @@ import '../controller/product.controller.dart';
 class ProductListPage extends StatelessWidget {
   ProductListPage({super.key});
 
-  final ProductController slideController = Get.find<ProductController>();
+  final ProductController productController = Get.find<ProductController>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +30,17 @@ class ProductListPage extends StatelessWidget {
               children: [
                 Obx(() {
                   return CarouselSlider.builder(
-                      itemCount: slideController.images.length,
+                      itemCount: productController.images.length,
                       itemBuilder: (context, index, realIndex) {
                         return Container(
-                          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 5),
                           margin: EdgeInsets.symmetric(horizontal: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(image: AssetImage(slideController
-                                .images[index]),
+                            image: DecorationImage(
+                              image: AssetImage(productController
+                                  .images[index]),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -49,7 +51,7 @@ class ProductListPage extends StatelessWidget {
                         autoPlay: false,
                         enlargeCenterPage: true,
                         onPageChanged: (index, reason) {
-                          slideController.updateIndex(index);
+                          productController.updateIndex(index);
                         },
                       )
                   );
@@ -57,16 +59,19 @@ class ProductListPage extends StatelessWidget {
                 Obx(() {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: slideController.images.map((i) {
-                      int index = slideController.images.indexOf(i);
+                    children: productController.images.map((i) {
+                      int index = productController.images.indexOf(i);
                       return Container(
                         width: 8,
                         height: 8,
-                        margin: EdgeInsets.symmetric(horizontal: 3,vertical: 10),
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 3, vertical: 10),
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: slideController.currentIndex.value == index ?
-                            AppColor.blueColor :
+                            color: productController.currentIndex.value == index
+                                ?
+                            AppColor.blueColor
+                                :
                             AppColor.inputColor
                         ),
                       );
@@ -74,80 +79,96 @@ class ProductListPage extends StatelessWidget {
                     ).toList(),
                   );
                 }),
-                    Padding(
+                Obx(() {
+                  if(productController.isLoading.value){
+                    return CircularProgressIndicator();
+                  }else if(productController.errorMessage.isNotEmpty){
+                    return Center(child: Text(productController.errorMessage.value),);
+                  }else {
+                    return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: SizedBox(
-                        height: Get.height*.5,
+                        height: Get.height * .5,
                         child: GridView.builder(
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
                               crossAxisSpacing: 5,
                               mainAxisSpacing: 5
-                            ),
-                            itemCount: slideController.imageList.length,
-                            itemBuilder: (context, index) {
-                              return Card(
-                                 child: Stack(
-                                  children:[
-                                    Container(
+                          ),
+                          itemCount: productController.productList.length,
+                          itemBuilder: (context, index) {
+                            var products=productController.productList[index];
+                            return Card(
+                              child: Stack(
+                                children: [
+                                  Container(
                                     margin: EdgeInsets.fromLTRB(0, 0, 0, 27),
                                     decoration: BoxDecoration(
                                       color: Colors.white,
-                                      borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10)),
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(10),
+                                          topLeft: Radius.circular(10)),
                                       image: DecorationImage(
-                                        image: AssetImage(slideController.imageList[index]),
+                                        image: AssetImage(
+                                            products.image),
                                         fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
-                                    
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: 25,
-                                        padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
-                                        decoration: BoxDecoration(
-                                          color: AppColor.inputColor.withOpacity(.5),
-                                          borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(10),
-                                            bottomRight: Radius.circular(10),
-                                          ),
-                                        ),
-                                        
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            InkWell(
-                                              child: SvgPicture.asset('assets/svg/buy-cart.svg',
-                                                width: 23,
-                                                height: 25,
-                                              ),
-                                              onTap: (){
-                                                Get.toNamed('/buyCart');
-                                              },
-                                            ),
-                                            SizedBox(width: 30,),
-                                            Text(
-                                              " \$${(index + 1) * 10} :قیمت ", // مثال قیمت
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                              textAlign: TextAlign.start,
-                                            ),
-                                          ],
-                                        ),
 
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 25,
+                                      padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
+                                      decoration: BoxDecoration(
+                                        color: AppColor.inputColor.withOpacity(
+                                            .5),
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10),
+                                        ),
                                       ),
+
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .spaceEvenly,
+                                        children: [
+                                          InkWell(
+                                            child: SvgPicture.asset(
+                                              'assets/svg/buy-cart.svg',
+                                              width: 23,
+                                              height: 25,
+                                            ),
+                                            onTap: () {
+                                              Get.toNamed('/buyCart');
+                                            },
+                                          ),
+                                          SizedBox(width: 30,),
+                                          Text(
+                                            " \$${(index + 1) * 10} :قیمت ",
+                                            // مثال قیمت
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            textAlign: TextAlign.start,
+                                          ),
+                                        ],
+                                      ),
+
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        );
-                      },
+                            );
+                          },
                         ),
                       ),
-                    ),
+                    );
+                  }
+                }),
               ],
             ),
           ),
