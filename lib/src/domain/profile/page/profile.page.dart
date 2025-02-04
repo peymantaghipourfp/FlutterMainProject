@@ -48,13 +48,13 @@ class ProfilePage extends StatelessWidget {
                               profileController.logout();
                             },
                             child: Text('خروج',),),),
-                        /*Container(
+                        Container(
                                       alignment: Alignment.topLeft,
                                       child: GestureDetector(
                                         onTap: () {
-                                          authController.logout();
+                                          profileController.logout();
                                         },
-                                        child: SvgPicture.asset('assets/svg/exit.svg',),),),*/
+                                        child: SvgPicture.asset('assets/svg/exit.svg',),),),
                         Positioned(
                           top: 40,
                           right: 10,

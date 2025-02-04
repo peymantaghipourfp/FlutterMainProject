@@ -94,7 +94,7 @@ class ProductListPage extends StatelessWidget {
                         Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SizedBox(
-                          height: Get.height,
+                          height: Get.height*.57,
                           child: GridView.builder(
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 1,
@@ -193,7 +193,9 @@ class ProductListPage extends StatelessWidget {
                                             Container(
                                               height: 40,
                                               child: ElevatedButton(
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  Get.toNamed('/buyDetail',arguments: products);
+                                                },
                                                 child: Text("\قیمت: ${products
                                                     .price} تومان "),
                                               ),

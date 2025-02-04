@@ -6,7 +6,7 @@ import '../../dashboard/page/dashboard.page.dart';
 import '../../home/page/home.page.dart';
 import '../../product/page/product_list.page.dart';
 import '../../profile/page/profile.page.dart';
-import '../../tools/page/tools.page.dart';
+import '../../tools/page/shopping_cart.page.dart';
 import '../controller/base.controller.dart';
 
 
@@ -62,7 +62,7 @@ class BasePage extends StatelessWidget {
                 label: 'profile',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.more_vert,
+                icon: Icon(Icons.shopping_cart,
                   size: baseController.navIndex.value == 4 ? 30 : 24,),
                 label: 'more',
               ),
@@ -79,7 +79,7 @@ class BasePage extends StatelessWidget {
               ProductListPage(),
               DashboardPage(),
               ProfilePage(),
-              ToolsPage()
+              ShoppingCartPage()
             ],
           )
       );
