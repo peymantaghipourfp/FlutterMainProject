@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:main_project/src/domain/cart/page/shopping_cart.page.dart';
 import 'package:main_project/src/domain/product/controller/buy_detail.controller.dart';
 import 'package:main_project/src/domain/product/model/product_list.model.dart';
 
@@ -15,8 +16,31 @@ class BuyDetailPage extends GetView<BuyDetailController> {
           appBar: AppBar(
             centerTitle: true,
             title: Text('جزئیات محصول'),
-            //leading: SvgPicture.asset('assets/svg/buy-cart.svg',),
-
+            actions: [
+              IconButton(
+                  icon: Stack(
+                    children: [
+                      Icon(Icons.shopping_cart,size: 27,),
+                      if(controller.cartCount > 0)
+                        Positioned(
+                            top: 0,
+                            right: 0,
+                            child: CircleAvatar(
+                              radius: 10,
+                              backgroundColor: Colors.red,
+                              child: Text(
+                                controller.cartCount.toString(),
+                                style: TextStyle(fontSize: 12,color: Colors.white),
+                              ),
+                            ),
+                        ),
+                    ],
+                  ),
+                  onPressed: (){
+                   controller.back(4);
+                  },
+              ),
+            ],
           ),
           
           body: SafeArea(

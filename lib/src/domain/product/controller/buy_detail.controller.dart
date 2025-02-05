@@ -1,10 +1,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:main_project/src/domain/base/controller/base.controller.dart';
 
 import '../model/product_list.model.dart';
 
 class BuyDetailController extends GetxController{
+  BaseController baseController=Get.find<BaseController>();
   late ProductListModel product;
   var selectedSize='M'.obs;
   var buttonSizes=<Color,Size>{}.obs;
@@ -27,5 +29,18 @@ BuyDetailController(){
    buttonSizes.updateAll((key, value) => Size(30, 30),);
    buttonSizes[color]=Size(45, 45);
   }
+  var cartItems=<ProductListModel>[].obs;
+  var quantity=1.obs;
 
+  void addToCart(ProductListModel product){
+    cartItems.add(product);
+  }
+
+  int get cartCount=>cartItems.length;
+
+  void back(int i){
+    Get.back();
+    //Get.toNamed('/base');
+    baseController.pageChange(i);
+  }
 }
