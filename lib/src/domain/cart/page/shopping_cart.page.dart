@@ -2,9 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:main_project/src/domain/cart/controller/shopping_cart.controller.dart';
+import 'package:main_project/src/domain/product/controller/buy_detail.controller.dart';
 
-class ShoppingCartPage extends GetView<ShoppingCartController> {
-  const ShoppingCartPage({super.key});
+class ShoppingCartPage extends StatelessWidget {
+  ShoppingCartPage({super.key});
+  BuyDetailController buyDetailController=Get.find<BuyDetailController>();
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +23,13 @@ class ShoppingCartPage extends GetView<ShoppingCartController> {
           child: Padding(
               padding: EdgeInsets.all(16),
             child: Obx((){
-              if(controller.cartItems.isEmpty){
+              if(buyDetailController.cartItems.isEmpty){
                 return Center(child: Text('سبد خرید شما خالی است'),);
               }else{
                 return ListView.builder(
-                  itemCount: controller.cartItems.length ,
+                  itemCount: buyDetailController.cartItems.length ,
                     itemBuilder:(context, index) {
-                      var product=controller.cartItems[index];
+                      var product=buyDetailController.cartItems[index];
                       return Card(
                         child: ListTile(
                           leading: Image.network(product.image),

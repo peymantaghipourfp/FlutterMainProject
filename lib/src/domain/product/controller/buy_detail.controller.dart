@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:main_project/src/domain/base/controller/base.controller.dart';
+import 'package:main_project/src/domain/cart/model/cart.model.dart';
 
 import '../model/product_list.model.dart';
 
@@ -14,6 +16,8 @@ class BuyDetailController extends GetxController{
   void onInit() {
     super.onInit();
     product=Get.arguments;
+    _cartBox=Hive.box<CartModel>('carts');
+    loadCarts();
   }
 BuyDetailController(){
   buttonSizes[Colors.redAccent]=Size(30, 30);
@@ -29,14 +33,20 @@ BuyDetailController(){
    buttonSizes.updateAll((key, value) => Size(30, 30),);
    buttonSizes[color]=Size(45, 45);
   }
+  var cartList=<CartModel>[].obs;
+  Box<CartModel>? _cartBox;
   var cartItems=<ProductListModel>[].obs;
   var quantity=1.obs;
 
-  void addToCart(ProductListModel product){
-    cartItems.add(product);
+  void loadCarts(){
+    cartList.value=_cartBox?.values.toList() ?? [];
+  }
+   addToCart(ProductListModel product){
+    _cartBox?.add(CartModel(id: product.id, title: product.title, image: product.image, price: product.price));
+    loadCarts();
   }
 
-  int get cartCount=>cartItems.length;
+  int get cartCount=>cartList.length;
 
   void back(int i){
     Get.back();

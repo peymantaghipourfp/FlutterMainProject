@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:main_project/src/domain/cart/model/cart.model.dart';
 import 'package:main_project/src/domain/cart/page/shopping_cart.page.dart';
 import 'package:main_project/src/domain/product/controller/buy_detail.controller.dart';
 import 'package:main_project/src/domain/product/model/product_list.model.dart';
@@ -26,7 +27,7 @@ class BuyDetailPage extends GetView<BuyDetailController> {
                             top: 0,
                             right: 0,
                             child: CircleAvatar(
-                              radius: 10,
+                              radius: 8,
                               backgroundColor: Colors.red,
                               child: Text(
                                 controller.cartCount.toString(),
@@ -156,11 +157,11 @@ class BuyDetailPage extends GetView<BuyDetailController> {
                           ],
                         ),
                       ),
-
                       // دکمه افزودن به سبد خرید
                       ElevatedButton(
                         onPressed: () {
-
+                          controller.addToCart(controller.product);
+                          Get.snackbar('به سبد خرید اضافه شد', '${controller.product.title} ',snackPosition: SnackPosition.BOTTOM);
                         },
                         child: Text("افزودن به سبد خرید"),
                       ),

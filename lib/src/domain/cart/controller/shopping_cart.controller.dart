@@ -1,16 +1,26 @@
 
 
 import 'package:get/get.dart';
-import 'package:main_project/src/domain/product/model/product_list.model.dart';
+import 'package:hive/hive.dart';
+import 'package:main_project/src/domain/cart/model/cart.model.dart';
+
+import '../../product/model/product_list.model.dart';
 
 class ShoppingCartController extends GetxController {
-  var cartItems=<ProductListModel>[].obs;
-  var quantity=1.obs;
+  var cartList=<CartModel>[].obs;
+  Box<CartModel>? _cartBox;
 
-  void addToCart(ProductListModel product){
-    cartItems.add(product);
+  @override
+  void onInit() {
+    super.onInit();
+    _cartBox=Hive.box<CartModel>('carts');
+    loadCarts();
   }
-
-  int get cartCount=>cartItems.length;
-
+  void loadCarts(){
+    cartList.value=_cartBox?.values.toList() ?? [];
+  }
+  void addCarts(ProductListModel cart){
+    _cartBox?.add(CartModel(id: cart.id, title: cart.title, image: cart.image, price: cart.price));
+    loadCarts();
+  }
 }
