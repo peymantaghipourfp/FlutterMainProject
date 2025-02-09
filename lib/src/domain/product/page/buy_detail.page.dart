@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:main_project/src/domain/cart/model/cart.model.dart';
 import 'package:main_project/src/domain/cart/page/shopping_cart.page.dart';
 import 'package:main_project/src/domain/product/controller/buy_detail.controller.dart';
@@ -8,6 +9,7 @@ import 'package:main_project/src/domain/product/model/product_list.model.dart';
 
 class BuyDetailPage extends GetView<BuyDetailController> {
   const BuyDetailPage({super.key});
+
 
   @override
   Widget build(BuildContext context) {

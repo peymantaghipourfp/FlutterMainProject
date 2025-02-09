@@ -13,9 +13,10 @@ class BuyDetailController extends GetxController{
   var selectedSize='M'.obs;
   var buttonSizes=<Color,Size>{}.obs;
 @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     product=Get.arguments;
+    await _openCartBox();
     _cartBox=Hive.box<CartModel>('carts');
     loadCarts();
   }
@@ -39,14 +40,24 @@ BuyDetailController(){
   var quantity=1.obs;
 
   void loadCarts(){
-    cartList.value=_cartBox?.values.toList() ?? [];
+    cartList.assignAll(_cartBox?.values.toList() ?? []);
   }
-   addToCart(ProductListModel product){
-    _cartBox?.add(CartModel(id: product.id, title: product.title, image: product.image, price: product.price));
+   void addToCart(ProductListModel carts){
+    _cartBox?.add(CartModel(id: carts.id, title: carts.title, image: carts.image, price: carts.price));
+    loadCarts();
+  }
+  void removeCart(String id){
+    _cartBox?.delete(id);
     loadCarts();
   }
 
   int get cartCount=>cartList.length;
+
+  Future<void> _openCartBox() async{
+    if(_cartBox==null || !_cartBox!.isOpen){
+      _cartBox=await Hive.openBox<CartModel>('carts');
+    }
+  }
 
   void back(int i){
     Get.back();

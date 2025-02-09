@@ -3,24 +3,38 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:main_project/src/domain/cart/model/cart.model.dart';
+import 'package:main_project/src/domain/product/controller/buy_detail.controller.dart';
 
 import '../../product/model/product_list.model.dart';
 
 class ShoppingCartController extends GetxController {
   var cartList=<CartModel>[].obs;
-  Box<CartModel>? _cartBox;
+  late Box<CartModel> cartBox;
 
   @override
   void onInit() {
     super.onInit();
-    _cartBox=Hive.box<CartModel>('carts');
-    loadCarts();
+    cartBox=Hive.box<CartModel>('carts');
+    loadCart();
   }
-  void loadCarts(){
-    cartList.value=_cartBox?.values.toList() ?? [];
+  void loadCart(){
+    cartList.clear();
+    if(cartBox.isNotEmpty) {
+      cartList.addAll(cartBox.values);
+      update();
+    }
   }
-  void addCarts(ProductListModel cart){
-    _cartBox?.add(CartModel(id: cart.id, title: cart.title, image: cart.image, price: cart.price));
-    loadCarts();
+  void removeCart(int index){
+    if(index>=0 && index<cartBox.length) {
+      cartBox.deleteAt(index);
+      cartList.assignAll(cartBox.values);
+      update();
+
+    }
+  }
+  void removeAllCart(){
+    cartBox.clear();
+    cartList.clear();
+    update();
   }
 }

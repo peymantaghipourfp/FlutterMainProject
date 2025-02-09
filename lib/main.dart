@@ -4,9 +4,12 @@ import 'package:get_storage/get_storage.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:main_project/src/config/routes/route_page.dart';
+import 'package:main_project/src/domain/cart/model/cart.model.dart';
 
 void main() async{
   await Hive.initFlutter();
+  Hive.registerAdapter(CartModelAdapter());
+  await Hive.openBox<CartModel>('carts');
   await GetStorage.init();
   runApp(const MyApp());
 }
