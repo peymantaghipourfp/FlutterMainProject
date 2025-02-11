@@ -193,11 +193,17 @@ class ProductListPage extends StatelessWidget {
                                             Container(
                                               height: 40,
                                               child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: AppColor.buttonColor
+                                                ),
                                                 onPressed: () {
                                                   Get.toNamed('/buyDetail',arguments: products);
                                                 },
                                                 child: Text("\قیمت: ${products
-                                                    .price} تومان "),
+                                                    .price} تومان ",style: TextStyle(
+                                                  color: AppColor.blackColor
+                                                ),
+                                                ),
                                               ),
                                             ),
                                           ],

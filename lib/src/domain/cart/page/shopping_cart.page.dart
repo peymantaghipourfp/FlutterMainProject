@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:main_project/src/config/consts/app_color.dart';
 import 'package:main_project/src/domain/cart/controller/shopping_cart.controller.dart';
-import 'package:main_project/src/domain/product/controller/buy_detail.controller.dart';
 
 class ShoppingCartPage extends GetView<ShoppingCartController> {
   const ShoppingCartPage({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,8 @@ class ShoppingCartPage extends GetView<ShoppingCartController> {
                                             controller.removeCart(index);
                                           },
                                           child: SvgPicture.asset(
-                                            'assets/svg/delete.svg', height: 27,
+                                            'assets/svg/delete.svg',
+                                            height: 27,
                                             width: 27,
                                           ),
                                         ),
@@ -77,6 +79,9 @@ class ShoppingCartPage extends GetView<ShoppingCartController> {
               ),
             ),
             ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColor.buttonColor,
+                ),
                     onPressed: () {
                       controller.cartList.isEmpty ?
                         Get.defaultDialog(
@@ -95,7 +100,7 @@ class ShoppingCartPage extends GetView<ShoppingCartController> {
                           //controller.removeAllCart();
 
                     },
-                    child: Text('تکمیل فرآیند خرید')),
+                    child: Text('تکمیل فرآیند خرید',style: TextStyle(color: AppColor.blackColor),)),
           ],
         ),
       ),

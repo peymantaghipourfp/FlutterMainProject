@@ -15,7 +15,7 @@ class SplashController extends GetxController{
   void _checkLoginStatus(){
     String? accessToken=storage.read('accessToken');
     if(accessToken!=null) {
-      Get.offNamed('/base'); // انتقال امن به صفحه اصلی
+      Get.offNamed('/base'); // انتقال به صفحه اصلی
     }else{
       Get.offNamed('/login');
     }

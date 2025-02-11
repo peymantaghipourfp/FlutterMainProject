@@ -111,6 +111,7 @@ class DashboardPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
                               Card(
+                                elevation: 0,
                                 child: Text('چارت'),
                               ),
                               Indicator(

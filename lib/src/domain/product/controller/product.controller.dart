@@ -7,6 +7,7 @@ import 'package:main_project/src/config/consts/app_image.dart';
 import 'package:main_project/src/config/repository/product_list.repository.dart';
 import 'package:main_project/src/domain/product/model/product_list.model.dart';
 
+enum PageState{loading,err,empty,list}
 class ProductController extends GetxController {
   var images=ImageSlide.slides.obs;
   var imageList=ImageSlide.imageList;

@@ -9,8 +9,8 @@ class ProductListRepository{
 
   ProductListRepository(){
     _productListDio.options.baseUrl="https://fakestoreapi.com";
-    _productListDio.options.connectTimeout=Duration(seconds: 3);
-    _productListDio.options.receiveTimeout=Duration(seconds: 5);
+    /*_productListDio.options.connectTimeout=Duration(seconds: 3);
+    _productListDio.options.receiveTimeout=Duration(seconds: 5);*/
   }
 
   Future<List<ProductListModel>> getProductList()async{

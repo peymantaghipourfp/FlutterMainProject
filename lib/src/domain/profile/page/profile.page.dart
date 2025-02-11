@@ -33,28 +33,42 @@ class ProfilePage extends StatelessWidget {
                           color: AppColor.inputColor,
                           width: double.infinity,
                           height: 100,
-                          child:
+                          /*child:
                           SizedBox(
                                         width: 40,
                                         height: 40,
                                         child: SvgPicture.asset('assets/svg/edit.svg', height: 40, width: 40,),
-                                    ),
+                                    ),*/
                         ),
                         Container(
-                          padding: EdgeInsets.only(left: 25),
+                          padding: EdgeInsets.only(left: 33, top: 3),
                           alignment: Alignment.topLeft,
                           child: GestureDetector(
                             onTap: () {
                               profileController.logout();
                             },
-                            child: Text('خروج',),),),
+                            child: Text(
+                              'خروج',
+                              style: TextStyle(
+                                fontSize: 20
+                              ),
+                            ),
+                          ),
+                        ),
                         Container(
-                                      alignment: Alignment.topLeft,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          profileController.logout();
-                                        },
-                                        child: SvgPicture.asset('assets/svg/exit.svg',),),),
+                          padding: EdgeInsets.only(left: 2,top: 2),
+                          alignment: Alignment.topLeft,
+                          child: GestureDetector(
+                            onTap: () {
+                              profileController.logout();
+                            },
+                            child: SvgPicture.asset(
+                              'assets/svg/exit.svg',
+                              width: 35,
+                              height: 35,
+                            ),
+                          ),
+                        ),
                         Positioned(
                           top: 40,
                           right: 10,
@@ -81,7 +95,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 20, top: 10),
+                    padding: const EdgeInsets.only(right: 30, top: 10),
                     child: Column(
                       textDirection: TextDirection.rtl,
                       children: [
@@ -93,7 +107,7 @@ class ProfilePage extends StatelessWidget {
                                 ? CircularProgressIndicator()
                                   : Text(profileController.email.value ?? '');
                             }),*/
-                            Text('email'),
+                            Text('peyman',style: TextStyle(fontSize: 18),),
                           ],
                         ),
                       ],

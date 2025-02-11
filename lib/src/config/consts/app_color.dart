@@ -8,5 +8,7 @@ class AppColor{
   static const Color inputColor=Color(0xffe3e6e5);
   static const Color blueColor=Color(0xff1e4994);
   static const Color backgroundColor=Color(0xff99a9b0);
+  static const Color buttonColor=Color(0xff55b4bd);
+  static const Color blackColor=Color(0xff0a0a0a);
 
 }
